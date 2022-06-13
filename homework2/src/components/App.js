@@ -31,13 +31,5 @@ class App extends React.Component {
     }
 }
 
-//(item,index) => {
-//    <li key={index}>
-//        <div className="card-body">
-//            <h5 className="card-title">{item.title}</h5>
-//            <p className="card-text">{item.text}</p>
-//        </div>
-//    </li>
-//}
 
 export default App;
