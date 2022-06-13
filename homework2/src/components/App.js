@@ -1,5 +1,5 @@
 import React from "react";
-
+import List from "./List";
 
 class App extends React.Component {
     constructor() {
@@ -7,6 +7,7 @@ class App extends React.Component {
         this.state = {
             arr: []
         }
+
     }
 
     componentDidMount() {
@@ -15,17 +16,11 @@ class App extends React.Component {
             .then(json => this.setState({ arr: json }))
     }
 
-    render() {
+
+    render(){
         return (
-            <ul className="list-group">
-                {this.state.arr.map((item, index) =>
-                    <li key={index} className="list-group-item list-group-item-action">
-                        <div className="card-body">
-                            <p className="text-muted">{item.id}</p>
-                            <h5 className="card-title">{item.title}</h5>
-                            <p className="card-text">{item.body}</p>
-                        </div>
-                    </li>)}
+            <ul>
+                {this.state.arr.map(item => <List data={item}/>)}
             </ul>
         )
     }
