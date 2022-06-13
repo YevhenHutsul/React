@@ -17,8 +17,8 @@ class App extends React.Component {
     render() {
         return (
             <>
-                
                 <Example data={this.state.country} />
+                <input type="text" placeholder="s"/>
                 <button onClick={this.changeText}>Поменять текст</button>
             </>
         )
