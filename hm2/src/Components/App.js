@@ -25,7 +25,7 @@ class App extends React.Component {
         return (
             <ul>
                 {this.state.arr.map((item,i) =>
-                    <li ket={i} className="list-group-item list-group-item-action">
+                    <li key={i} className="list-group-item list-group-item-action">
                         <div className="card-body">
                             <p className="text-muted">{item.id}</p>
                             <h5 className="card-title">{item.title}</h5>
