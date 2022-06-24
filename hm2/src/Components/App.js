@@ -79,6 +79,7 @@ class App extends React.Component {
 
     render() {
         return (
+<<<<<<< HEAD
             <div className="container">
                 <form>
                     <input
@@ -116,5 +117,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-
