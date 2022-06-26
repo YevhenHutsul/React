@@ -5,13 +5,14 @@ class App extends React.Component {
         super();
         this.state = {
             arr: [],
-            inputValue: "",
-            validInput: "",
-            changeItemValue: "",
-            setDisabled: true,
-
+            inputForm: "",
+            validValue: "",
+            inputChange: "",
+            setDisabled: true
         }
     }
+
+
 
     componentDidMount() {
         fetch('https://jsonplaceholder.typicode.com/posts')
@@ -19,75 +20,80 @@ class App extends React.Component {
             .then(json => this.setState({ arr: json }))
     }
 
-    deleteHandler(id) {
-        const newArr = this.state.arr;
-        newArr.splice(id, 1);
+    deleteHandler(del) {
+        const newArr = this.state.arr.map(item => {
+            const obj = item;
+            if (item.id > del) {
+                obj.id--;
+            }
+            return obj
+        });
+        newArr.splice(del, 1);
         this.setState({ arr: newArr })
     }
 
-    onChangeInputForm = (e) => {
-        if (this.testValue(e.target.value)) {
+    onChangeValue = (e) => {
+        const input = e.target.name;
+        const value = e.target.value;
+        if (this.testValue(value)) {
             this.setState({
+                validValue: value,
                 setDisabled: false,
-                validInput: e.target.value
-            });
-        } else {
-            this.setState({
-                setDisabled: true,
-            });
+            })
         }
-        this.setState({ inputValue: e.target.value })
+        this.setState({ [input]: value })
     }
 
+
     sendItem() {
-        const oldArr = this.state.arr;
-
-
-        oldArr.unshift({
-            userId: oldArr.length,
-            id: oldArr.length - (oldArr.length - 1),
-            title: 'Новый итем',
-            body: this.state.validInput
+        const newItem = this.createItem(this.state.validValue);
+        const newArr = this.state.arr.map(item => {
+            const obj = item;
+            obj.id++;
+            return obj
         });
+        newArr.unshift(newItem);
 
-
-        const newArr = oldArr;
         this.setState({
             arr: newArr,
             setDisabled: true,
-            inputValue: "",
-            validInput: "",
-        });
+            inputForm: "",
+        })
     }
 
     changeItem(i) {
         const item = this.state.arr[i];
-        item.body = this.state.changeItemValue;
-        
-        const newArr = this.state.arr;
+        item.body = this.state.inputChange;
 
-        this.setState({arr:newArr})
+
+        this.setState({
+            inputChange: "",
+        })
     }
 
-    changeItemValue = (e) => {
-        this.setState({changeItemValue: e.target.value})
-    }
 
+    createItem(str) {
+        return {
+            userId: this.state.arr.length,
+            id: 1,
+            title: 'Новый итем',
+            body: str
+        }
+    }
     testValue(val) {
         return /^([а-я]+[А-Я][а-я]*|[а-я]*[А-Я][а-я]+)/.test(val) && (val.length >= 2 && val.length <= 7);
     }
 
     render() {
         return (
-<<<<<<< HEAD
             <div className="container">
                 <form>
                     <input
                         className="form-control"
-                        name="inputValue"
+                        name="inputForm"
                         type="text"
-                        value={this.state.inputValue}
-                        onChange={this.onChangeInputForm}
+                        value={this.state.inputForm}
+                        onChange={this.onChangeValue}
                     ></input>
                     <button type="button" disabled={this.state.setDisabled} onClick={() => this.sendItem()}>Добавить</button>
                 </form>
@@ -99,15 +105,16 @@ class App extends React.Component {
                                 <p className="text-muted">{item.id}</p>
                                 <h5 className="card-title">{item.title}</h5>
                                 <p className="card-text">{item.body}</p>
-                                <button className="btn-primary" onClick={() => this.deleteHandler(i)}>Удалить</button>
-                                <input 
+                                <input
                                     className="form-control"
-                                    name="changeItem"
+                                    placeholder="Поменять итем"
+                                    name="inputChange"
                                     type="text"
-                                    value={this.props.changeItemValue}
-                                    onChange={this.changeItemValue}
+                                    value={this.state.inputChange}
+                                    onChange={this.onChangeValue}
                                 ></input>
-                                <button className="btn-primary" onClick={() => this.changeItem(i)}>Изменить</button>
+                                <button className="btn-primary" onClick={() => this.deleteHandler(i)}>Удалить</button>
+                                <button className="btn-primary" disabled={!this.state.inputChange} onClick={() => this.changeItem(i)}>Изменить</button>
                             </div>
                         </li>)}
                 </ul>
