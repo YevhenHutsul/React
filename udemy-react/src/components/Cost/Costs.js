@@ -1,9 +1,10 @@
 import "./Costs.css";
 import { ConstItem } from "./ConstItem";
+import { Card } from "../UI/Card";
 
-export function Costs(props) {
+export const Costs = (props) => {
     return (
-        <>
+        <Card   className="costs">
             <ConstItem
                 date={props.costs[0].data}
                 description={props.costs[0].description}
@@ -19,6 +20,6 @@ export function Costs(props) {
                 description={props.costs[2].description}
                 amount={props.costs[2].amount}
             ></ConstItem>
-        </>
+        </Card>
     )
 }
