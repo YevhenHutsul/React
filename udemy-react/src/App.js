@@ -2,7 +2,10 @@ import { Costs } from "./components/Cost/Costs";
 import { NewCost } from "./components/NewCost/NewCost";
 
 function App() {
+    const saveNewCostDataHandler = (data) => {
+        console.log(data)
 
+    }
     const costs = [
         {
             data: new Date(2021, 3, 12),
@@ -22,7 +25,7 @@ function App() {
     ]
     return (
         <div>
-            <NewCost/>
+            <NewCost onSaveNewCostDataHandler = {saveNewCostDataHandler}/>
             <Costs costs = {costs}/>
         </div>
     );
