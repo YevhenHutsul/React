@@ -1,9 +1,22 @@
 import "./Costs.css";
 import { ConstItem } from "./ConstItem";
 import { Card } from "../UI/Card";
+import { CostsFilter } from "./CostsFilter";
+import { useState } from "react";
 
 export const Costs = (props) => {
+
+    const [selectedYear, setSelectedYear] = useState("2021");
+
+    const changeYear = (data) => {
+        setSelectedYear(data);
+    }
     return (
+        <>
+        <CostsFilter 
+        onChangeYear = {changeYear} 
+        year = {selectedYear}
+        />
         <Card   className="costs">
             <ConstItem
                 date={props.costs[0].data}
@@ -21,5 +34,6 @@ export const Costs = (props) => {
                 amount={props.costs[2].amount}
             ></ConstItem>
         </Card>
+        </>
     )
 }
