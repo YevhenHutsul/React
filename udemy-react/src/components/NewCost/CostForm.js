@@ -3,20 +3,20 @@ import { useState } from "react"
 
 export const CostForm = ({ onSaveCostData }) => {
 
-    //const [name, setName] = useState('')
+    //const [description, setName] = useState('')
     //const [amount, setAmount] = useState('')
     //const [date, setDate] = useState('')
 
     const [userInput, setUserInput] = useState({
-        name: "",
+        description: "",
         amount: "",
-        date: ""
+        data: ""
     })
 
     const nameChangeHandler = (event) => {
         setUserInput((prev) => ({
             ...prev,
-            name: event.target.value
+            description: event.target.value
         }))
     }
 
@@ -30,7 +30,7 @@ export const CostForm = ({ onSaveCostData }) => {
     const dateChangeHandler = (event) => {
         setUserInput((prev) => ({
             ...prev,
-            date: event.target.value
+            data: event.target.value
         }))
     }
 
@@ -39,15 +39,15 @@ export const CostForm = ({ onSaveCostData }) => {
 
         const data = {
             ...userInput,
-            date: new Date(userInput.date)
+            data: new Date(userInput.data)
         }
 
         onSaveCostData(data)
 
         setUserInput(() => ({
-            name: "",
+            description: "",
             amount: "",
-            date: ""
+            data: ""
         }))
 
         
@@ -59,7 +59,7 @@ export const CostForm = ({ onSaveCostData }) => {
             <div className="new-cost__controls">
                 <div className="new-cost__control">
                     <label>Название</label>
-                    <input type="text" value={userInput.name} onChange={nameChangeHandler} />
+                    <input type="text" value={userInput.description} onChange={nameChangeHandler} />
                 </div>
                 <div className="new-cost__control">
                     <label>Сумма</label>
@@ -67,7 +67,7 @@ export const CostForm = ({ onSaveCostData }) => {
                 </div>
                 <div className="new-cost__control">
                     <label>Дата</label>
-                    <input type="date" value={userInput.date} onChange={dateChangeHandler} />
+                    <input type="date" value={userInput.data} onChange={dateChangeHandler} />
                 </div>
                 <div className="new-cost__action">
                     <button type="submit">Добавить рассход</button>

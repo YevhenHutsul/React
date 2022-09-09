@@ -5,35 +5,40 @@ import { CostsFilter } from "./CostsFilter";
 import { useState } from "react";
 
 export const Costs = (props) => {
-
     const [selectedYear, setSelectedYear] = useState("2021");
 
     const changeYear = (data) => {
         setSelectedYear(data);
     }
+
+
+    const filtered = props.costs.filter(cost => {
+        return cost.data.getFullYear().toString() === selectedYear
+    })
+
+    let costsContent = <p>В этом году расходов не было</p>
+
+    if(filtered.length > 0){
+        costsContent = filtered.map(cost => (
+            <ConstItem
+                key={Math.random()}
+                date={cost.data}
+                description={cost.description}
+                amount={cost.amount}
+            />
+        ))
+    }
+
+
     return (
         <>
-        <CostsFilter 
-        onChangeYear = {changeYear} 
-        year = {selectedYear}
-        />
-        <Card   className="costs">
-            <ConstItem
-                date={props.costs[0].data}
-                description={props.costs[0].description}
-                amount={props.costs[0].amount}
-            ></ConstItem>
-            <ConstItem
-                date={props.costs[1].data}
-                description={props.costs[1].description}
-                amount={props.costs[1].amount}
-            ></ConstItem>
-            <ConstItem
-                date={props.costs[2].data}
-                description={props.costs[2].description}
-                amount={props.costs[2].amount}
-            ></ConstItem>
-        </Card>
+            <Card className="costs">
+                <CostsFilter
+                    onChangeYear={changeYear}
+                    year={selectedYear}
+                />
+                {costsContent}
+            </Card>
         </>
     )
 }
